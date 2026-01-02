@@ -1,39 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Request</title>
-</head>
-<body>
-  <h2>get points</h2>
-  <button onclick="showLocation()">Show Encoding</button>
+  <meta charset="UTF-8">
+  <title>Big HTML Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <p id="output"></p>
-
-  <script>
-    let encodedLocation = null;
-
-    const mapDigit = d => String.fromCharCode(97 + Number(d)); // 0=a, 1=b...
-
-    function encodeNumber(num) {
-      return num
-        .toString()
-        .split("")
-        .map(ch => (/\d/.test(ch) ? mapDigit(ch) : ch)) // keep . and -
-        .join("");
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      background: #f4f4f4;
     }
 
-    window.onload = () => {
-      navigator.geolocation.getCurrentPosition(pos => {
+    header {
+      background: #222;
+      color: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+
+    section {
+      padding: 40px;
+      background: #fff;
+      margin: 20px;
+      border-radius: 8px;
+    }
+
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 2.5rem; }
+    p  { font-size: 1.4rem; }
+
+    ul {
+      font-size: 1.3rem;
+      margin-left: 30px;
+    }
+
+    button {
+      font-size: 1.3rem;
+      padding: 15px 30px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>BIG CONTENT HTML PAGE</h1>
+  <p>Scrollable, structured, and functional.</p>
+</header>
+
+<section>
+  <h2>Introduction</h2>
+  <p>This page has real structure and enough content to scroll.</p>
+</section>
+
+<section>
+  <h2>Details</h2>
+  <ul>
+    <li>Header & footer</li>
+    <li>Multiple sections</li>
+    <li>Large readable text</li>
+    <li>JavaScript logic at the end</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Actions</h2>
+  <p>Buttons actually do something.</p>
+</section>
+
+
+<section>
+  <h2>Get Points</h2>
+  <button onclick="showLocation()">Show Encoding</button>
+  <p id="output"></p>
+</section>
+
+<script>
+  let encodedLocation = null;
+
+  const mapDigit = d => String.fromCharCode(97 + Number(d)); // 0=a, 1=b...
+
+  function encodeNumber(num) {
+    return num
+      .toString()
+      .split("")
+      .map(ch => (/\d/.test(ch) ? mapDigit(ch) : ch))
+      .join("");
+  }
+
+  window.onload = () => {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
         const lat = encodeNumber(pos.coords.latitude.toFixed(5));
         const lon = encodeNumber(pos.coords.longitude.toFixed(5));
         encodedLocation = lat + " | " + lon;
-      });
-    };
+      },
+      () => {
+        encodedLocation = "Permission denied";
+      }
+    );
+  };
 
-    function showLocation() {
-      document.getElementById("output").innerText =
-        encodedLocation ?? "Location not available";
-    }
-  </script>
+  function showLocation() {
+    document.getElementById("output").innerText =
+      encodedLocation ?? "Location not available";
+  }
+</script>
+
+<footer>
+  <p>© 2026 Example Page</p>
+</footer>
+
 </body>
 </html>
